@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [counter, setCounter] = useState(0);
+
+    const plusCounter = () => {
+        setCounter((prev) => prev + 1);
+
+        document.getElementsByClassName("warning")[0].classList.add("hidden");
+    };
+
+    const minusCounter = () => {
+        setCounter((prev) => {
+            if (prev - 1 === 0) {
+                document
+                    .getElementsByClassName("warning")[0]
+                    .classList.remove("hidden");
+            }
+
+            if (prev > 0) {
+                return prev - 1;
+            }
+            if (prev === 0) {
+                return prev;
+            }
+        });
+    };
+
+    return (
+        <div className="App">
+            <div>{counter}</div>
+            <div>
+                <button onClick={plusCounter}>Прибавить единицу</button>
+                <button onClick={minusCounter}>Убавить единицу</button>
+                <p className="warning">
+                    Пожалуйста, измените количество, оно не может быть равно 0
+                </p>
+            </div>
+        </div>
+    );
 }
 
 export default App;
